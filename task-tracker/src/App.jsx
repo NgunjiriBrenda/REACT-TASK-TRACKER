@@ -1,13 +1,20 @@
+import {useState} from "react";
 function App(){
 
-
 //Fake data for tasks-array of objects
-const tasks=[
+const [tasks, setTasks]=useState([
   {id: 1, text: "Learn React basics", completed: false},
   {id: 2, text: "Build a simple app", completed: false},
   {id: 3, text: "Learn Database Systems", completed: false},
   {id: 4, text: "Learn Props and Components", completed: true},
-];
+]);
+
+function toggleTask(id) {
+  setTasks(
+    tasks.map((task) =>
+       task.id === id ? {...task, completed: !task.completed} : task)
+  );
+}
 
 return (
   <div className="app">
@@ -15,7 +22,10 @@ return (
 
     <ul> 
       {tasks.map((task) => (
-        <li key={task.id}>
+        <li key={task.id} 
+        onClick={() => toggleTask(task.id)}
+        style={{cursor:"pointer"}}>
+
           {task.text} {task.completed? "":<button>Mark as Completed</button>}
         </li>
       ))}
